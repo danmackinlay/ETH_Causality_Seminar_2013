@@ -1,0 +1,81 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = Isolatin
+% !TeX root = ..\ETH_praesentation.tex
+
+
+%% Version 1.2 21.04.2011
+% ==== class ===================================================================
+\documentclass[
+	paper=128mm:96mm,  % like beamer
+	fontsize=11pt,     % like beamer
+	pagesize,          % write page size to dvi or pdf
+	parskip=half-,     % paragraphs are separated by half a line, no special marking of line
+                       % endings
+	numbers=noendperiod,% removes points for special parts (e.g. appendix)
+	captions=nooneline % do not distinguish between one or more lines in captions
+    ]{scrartcl}
+\linespread{1.12}% enlarge line space
+% ==== packages ================================================================
+
+% font stuff
+\usepackage[T1]{fontenc}% for correct hyphenation and T1 encoding
+\AfterFile{t1lmss.fd}{  % see http://www.komascript.de/node/823
+  \DeclareFontShape{T1}{lmss}{b}{n}
+  {<->ssub*lmss/bx/n}{}
+}
+\usepackage{lmodern}        % latin modern font
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{helvet}         % helvetica as the origin of arial
+\usepackage[helvet]{./ETH_res/sfmath} % for the mathematical enviroments
+\usepackage{microtype}      % for character protrusion and font expansion (only with pdflatex)
+
+% colors
+\usepackage{xcolor}         % color package; load before tocstyle
+\usepackage{wallpaper}      % background picture
+\setlength{\wpXoffset}{0mm}
+\setlength{\wpYoffset}{-10mm}
+
+% page structure
+\usepackage{calc}% working with lengths, counters etc.
+\usepackage[includeheadfoot,
+            top=-0.5mm, bottom=3.5mm,
+            left=5.5mm, right=5.5mm,
+            headsep=10.5mm, footskip=4.5mm]{geometry}% set page layout parameters
+\usepackage{scrpage2}% package for page style with not only uppercase letters in the head
+\usepackage{titlesec}% for reducing space between ((sub)sub)sections and text
+\usepackage{tocstyle}% for adjusting table of contents
+% === toc style ===
+\makeatletter
+    \newtocstyle[noonewithdot]{nodotnopagenumber}{
+    % define tocstyle without dots and page numbers
+            \settocfeature{pagenumberbox}{\@gobble}
+    }
+\makeatother
+\usetocstyle{nodotnopagenumber}
+
+% misc
+\usepackage{amsthm}     % theorem environments
+\usepackage{bm}         % for bold math symbols
+\usepackage{enumitem}   % for automatic numbering of new enumerate environments
+\usepackage{graphicx}   % for including figures
+%\graphicspath{{pictures/}}
+
+\usepackage{tikz}       % sophisticated graphics package
+\usepackage{tabularx}   % for special table environment (tabularx-table)
+\usepackage{booktabs}   % for table layout
+\usepackage{natbib}     % for bibliography with astron-style
+\bibliographystyle{astron}
+\usepackage{siunitx}    % to use for international units in the real world
+
+\usepackage[
+    hypertexnames=false,% for correct links (duplicate-error solution)
+	setpagesize=false,  % necessary in order to not change text-/paperformat for the document
+	pdfborder={0 0 0},  % removes border around links
+	pdfpagemode=FullScreen,% open pdf in full screen mode
+    pdfstartview=Fit    % fit page to pdf viewer
+]{hyperref}% all links stay black and are thus invisible
+%\hypersetup{% Note: If \ETHauthor or \ETHtitle contain non-us-ascii-chars you
+%            % should not use them inside \hyperref.
+%  pdfauthor=\ETHauthor,
+%  pdftitle=\ETHtitle
+%} 

@@ -1,0 +1,142 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = Isolatin
+% !TeX root = ..\ETH_praesentation.tex
+
+
+%% Version 1.2 21.04.2011
+% ==== settings page style and foot ============================================
+\pagestyle{scrheadings} % activates pagestyle from scrpage2
+\clearscrheadfoot       % clear head and foot of scrheadings and scrplain
+                        % setting for page head and foot
+\setkomafont{pageheadfoot}{\normalfont\color{black}\sffamily}
+% optical vertical centering of page contents
+\makeatletter
+    \renewcommand*{\@textbottom}{\vskip \z@ \@plus 1fil}
+    \newcommand*{\@texttop}{\vskip \z@ \@plus .5fil}
+    \addtolength{\parskip}{\z@\@plus .25fil}% stretch parskip a lot
+\makeatother
+% ==== head ====================================================================
+\setheadwidth[0pt]{textwithmarginpar}
+\clearscrheadfoot
+% head (optional argument is scrplain, mandatory scrheadings)
+\lohead{\begin{minipage}[t]{40mm}
+              \vspace{0mm}
+              \includegraphics[width=0.7\textwidth]{ETH_res/ETH_logo.pdf}
+        \end{minipage}
+}%
+
+\rohead{\begin{minipage}[t]{35.5mm}
+               \vspace*{-1mm}\renewcommand{\baselinestretch}{0.4}
+               \bf
+               \fontsize{8}{9}\selectfont
+               \ETHdeptshort\\\\
+               \fontsize{4}{5}\selectfont
+               \ETHdeptlong\\
+               \ETHinstitut
+               \end{minipage}
+        }
+% ==== foot ====================================================================
+\newlength{\footheight}
+\setlength{\footheight}{6mm}
+\setkomafont{pagefoot}{\normalfont\sffamily\color{white}}
+\addtokomafont{pagefoot}{\tiny}% general setting for the foot
+\setkomafont{pagenumber}{\color{white}}% setting for page foot
+\ifoot{% foot inside (left) to include the figur
+	\hspace{-6.0mm}
+    \vspace{-8.5mm}
+	\begin{tikzpicture}[remember picture,overlay]
+		\node [xshift=\paperwidth/2,yshift=\footheight/2]
+        {\includegraphics[width=\paperwidth]{ETH_res/ETH_footer.jpg}};
+	\end{tikzpicture}%
+}%
+
+\cfoot{% foot center to include the text
+    \ifnum\value{page} > 1            % first page without footer writings
+        \vspace{-6.5mm}
+        {\fontsize{5}{6}\selectfont   % very small font
+            \begin{minipage}[b]{50mm} % left
+                \ETHdate
+            \end{minipage}
+            \begin{minipage}[b]{57mm} % center
+                \ETHauthor
+            \end{minipage}
+            \begin{minipage}[b]{8mm}  % right
+                \hfill \pagemark
+            \end{minipage}
+        }
+    \fi
+}%
+% ==== end settings page style and foot ========================================
+
+% theorems, proofs
+\newtheoremstyle{ETHthmstyle}%
+	{0.5em}% space above
+	{0.5em}% space below
+	{}% body font
+	{}% indent amount
+	{\sffamily\bfseries}% head font
+	{}% punctuation after head
+	{\newline}% space after head
+	{\thmname{#1}\ \thmnote{(#3)}}% head spec
+\theoremstyle{ETHthmstyle}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\renewcommand*\proofname{Proof}
+\makeatletter% correct qed adjustment
+    \renewenvironment{proof}[1][\proofname]{\par
+    \pushQED{\qed}
+    \normalfont\topsep2\p@\@plus2\p@\relax
+    \trivlist
+    \item[\hskip\labelsep
+	      \sffamily\bfseries #1]\mbox{}\hfill\\*\ignorespaces
+          }{\popQED\endtrivlist\@endpefalse
+    }
+\makeatother
+% note environment
+\newenvironment{note}[1]{
+  \labeling{#1}
+		\item[#1]\ignorespaces
+    }{\endlabeling
+    }
+
+% ==== commands ================================================================
+
+% decoration
+\usetikzlibrary{decorations.pathmorphing,shadows}
+
+
+% box
+\newcommand*{\ETHbox}[2]{% width, content
+	\par\noindent
+	\begin{tikzpicture}[ETHnodestyle/.style={rectangle,rounded
+            corners,draw=ETHdarkgray!40!white,
+            thick,inner sep=2mm,text justified,top color=ETHlightblue!30!white, bottom color=ETHlightblue,above}]%
+		    \node[ETHnodestyle,at={(0.5*#1+2mm+0.4pt,0)}]{%
+			\begin{minipage}[t]{#1}
+				#2
+			\end{minipage}%
+		    };
+%		    \node[ETHnodestyle,at={(0.5*#1+2mm+0.4pt,-0.1)},yscale=-0.33,scope
+%                  fading=south,opacity=0.85]{%
+%			     \begin{minipage}[t]{#1}
+%				        \strut
+%			     \end{minipage}%
+%		          };
+	\end{tikzpicture}%	
+	\par\vspace{-1.3em}
+}
+
+% labels
+\newcommand*{\ETHitem}{\raisebox{1pt}{\tikz\fill[sharp
+    corners](0,0)rectangle+(3.4pt,3.4pt);}}
+
+% spacings & make the title section fonts slightly smaller
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titlespacing{\section}{0mm}{0mm}{0mm}
+% make space (left, before, after) between section and text smaller
+\titlespacing{\subsection}{0mm}{0mm}{-1mm}
+% make space (left, before, after) between subsection and text smaller
+\titlespacing{\subsubsection}{0mm}{0mm}{-2mm}
+% make space (left, before, after) between subsubsection and text smaller
+\setcounter{secnumdepth}{2}% add numbering down to subsection 
