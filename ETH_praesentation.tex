@@ -23,22 +23,27 @@
 \newcommand*{\ETHdarkgray}[1]{\textcolor{ETHdarkgray}{#1}}
 
 % ==== document related info ===================================================
-\newcommand*{\ETHdeptshort}{\textsc {\color{ETHlightblue}D}\,MUST}
-\newcommand*{\ETHdeptlong}{Departement of Muster}
-\newcommand*{\ETHinstitut}{Institut}
-\newcommand*{\ETHtitle}{Title}
-\newcommand*{\ETHsubtitle}{Subtitle}
-\newcommand*{\ETHauthor}{Author/\ETHdeptlong/\ETHinstitut}
-\newcommand*{\ETHdate}{Monday, 9th May 2011}
+\newcommand*{\ETHdeptshort}{\textsc {\color{ETHlightblue}D}\,MATH}
+\newcommand*{\ETHdeptlong}{Department of Mathematics}
+\newcommand*{\ETHinstitut}{Seminar for Statistics}
+\newcommand*{\ETHtitle}{A Non-Parametric Independence Test}
+\newcommand*{\ETHsubtitle}{The Hilbert-Schmidt Independence Criterion}
+\newcommand*{\ETHauthor}{D MacKinlay, C. Pelloni, A. Toletti / \ETHdeptlong / \ETHinstitut}
+\newcommand*{\ETHdate}{Monday, 24th April 2013}
 
 % ==== document language =======================================================
 % American English
 \usepackage[american]{babel}
 %\selectlanguage{american}
+
+% we want these for nice mathematical typesetting
+\usepackage{amssymb,amsmath,amsthm,bbm}
+\newtheorem*{defn}{Definition}
+
 \AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
 %% new German
 %\selectlanguage{ngerman}
-%\AtBeginDocument{\renewcaptionname{ngerman}{\contentsname}{\large Übersicht}}% toc-name
+%\AtBeginDocument{\renewcaptionname{ngerman}{\contentsname}{\large \UTF{2039}bersicht}}% toc-name
 
 % ==== document ================================================================
 \begin{document}
@@ -85,17 +90,96 @@
 % ==============================================================================
 
 %#### Please fill in your normal Latex document and add some clearpage-commands.
-\section{section one}
+\section{What are we doing today?}
+\begin{enumerate}
+	\item We consider the problems with dependency of the PC algorithm on the partial correlation algorithm, which assumes linear, additive noise, then \ldots
+	\item\ldots construct an alternative test of independence which can be used instead.
+\end{enumerate}
 \clearpage
-\subsection{subsection one}
+Constructing our alternative will involve
+\begin{enumerate}
+	\item some functional analysis background,
+	\item actually deriving the test, then,
+	\item constructing estimator from data
+\end{enumerate}
 \clearpage
-\subsubsection{subsubsection one}
+
+\section{The problem with the partial correlation test}
+
+\subsection{Linearly-additive Gaussian noise models and their limitations}
+Last week we saw two methods for inferring graph structures from a sample of variables.
+
+This method presumed linear additive Gaussian noise. However, we are not guaranteed that our data will be anything like that.
+
+\clearpage
+Consider:
+\begin{enumerate}
+\item Categorical data \emph{(If it's raining/if the sprinkler is on/\ldots)}
+\item Non-gaussian noise \emph{(e.g. exponential)}
+\item Non-additive coupling \emph{(e.g. multiplicative)}
+\item Whatever combination of exotic data types, noise and interactions that you would like\dots \emph{(Nucleotide sequences with Bernoulli noise?)}
+\end{enumerate}
+\clearpage
+\section{Examples}
+\emph{TODO}
+\clearpage
+\section{Alternative, non-parametric tests of independence}
+What independence tests can relax the strong assumptions of partial correlation?
+
+There are many! e.g. mutual information, rank statistics, copula measures\ldots
+\clearpage
+\subsection{Hilbert-Schmidt Independence Criterion}
+This week's a``kernelisation''-based~\footnote{as made famous by Support Vector Machines} method, has attractive features.
+\begin{enumerate}
+\item It can handle arbitrary input spaces, not just $\mathbb{R}^d$ (e.g. nucleotide strings)
+\item It is easy to conditionalize.
+\end{enumerate}
+Both those things said, for simplicity, today we will only construct the marginal (unconditional) independence measure on $\mathcal{X}=\mathbb{R}^d$, by way of introduction. (Homework: conditional estimator on general input spaces.)
+\clearpage
+\section{Functional analysis in 15 minutes}
+We consider the prospect of transforming our data in $\mathcal{X}$ into a Hilbert space $\mathcal{H}$, in the hope of finding a convenient representation of the data. This Hilber space, which we will think of as a ``feature space'', will turn out to be a convenient way to represent a wide variety of possible relationships between variables.
+
+\subsection{Hilbert Space}
+\begin{defn}
+A Hilbert space $\mathcal{H}$ is a complete, non-necessarily finite-dimensional, vector space endowed with an inner product $\langle\cdot,\cdot\rangle: \mathcal{H}\times\mathcal{H} \rightarrow\mathbb{R}$, which fulfils the usual requirements of inner products on vector spaces.
+\end{defn}
+\clearpage
+\begin{defn}
+An \emph{inner product}, $\langle\cdot,\cdot\rangle$ on a Hilbert space generalises the definition on $\mathbb{R}^d$ in a natural fashion, in that, for $f,\,g$ and $h \in \mathcal{H}$ and for $\alpha$ and $\beta \in \mathbb{R}$:
+\begin{enumerate}
+\item $\langle\alpha f + \beta g, h\rangle = \alpha\langle f, h\rangle + \beta\langle g, h\rangle$
+\item $\langle f, g\rangle = \langle g, f \rangle$
+\item $\langle f, f \rangle \ge 0$ and $\langle f, f\rangle = 0$ iff $f =0$
+\end{enumerate}
+\end{defn}
+
+Consider an ``input'' metric space $\mathcal{X}$ endowed with $\sigma$-algebra, $\Gamma$,
+on a probability space $(\mathcal{X}, \Gamma, \mu)$.
+Samples $x_i \in \mathcal{X}$ are drawn independently.
+\emph{TODO note Jonas used $\Omega$ here - why?}
+\clearpage
+We define define a \emph{kernel}, $k$,
+\begin{equation}
+k : \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}
+\end{equation}
+and a map
+\begin{equation}
+\phi: \mathcal{X} \rightarrow \mathcal{H}
+\end{equation}
+such that 
+\begin{equation}
+k(x, x') = \langle \phi(x), \phi(x') \rangle
+\end{equation}
+\clearpage
+
+\clearpage
+\clearpage
 \clearpage
 % ===== special page ===========================================================
 % ===== page with a background picture =========================================
 \ThisCenterWallPaper{1}{ETH_res/ETH_neutral.jpg}
 \textcolor{white}{ % change the text on the background picture to white
-Discussion, results, conclusion \ldots
+Discussion, results, conclusion 
 }
 
 
@@ -112,6 +196,6 @@ Discussion, results, conclusion \ldots
 %}%
 %
 %% now on normal text again
-%More discussion \ldots
+%More discussion 
 
 \end{document} 
