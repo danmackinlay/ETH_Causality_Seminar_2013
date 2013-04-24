@@ -5,8 +5,10 @@
 % changed by D. Hennig, IT-Service ETH
 
 %% Version 1.4 09.05.2011
-\input{ETH_res/ETH_packages.tex} % docymentsyle and packages
-\input{ETH_res/ETH_settings.tex} % settings
+%\input{ETH_res/ETH_packages.tex} % docymentsyle and packages
+\input{ETH_packages.tex} % docymentsyle and packages
+%\input{ETH_res/ETH_settings.tex} % settings
+\input{ETH_settings.tex} % settings
 
 % ====  colors  ================================================================
 \definecolor{ETHblue}{RGB}{51,89,148}           % #335994
@@ -51,7 +53,8 @@
 \begin{tikzpicture}[overlay]
     \node [shift={(-69.5mm,-133.95mm)}]  at (current page.north east)
     %% ETH-Hauptgebaeude (main building of the ETH)
-    {\includegraphics[width=\paperwidth]{ETH_res/ETH_HG.jpg}};
+%    {\includegraphics[width=\paperwidth]{ETH_res/ETH_HG.jpg}};
+    {\includegraphics[width=\paperwidth]{ETH_HG.jpg}};
 \end{tikzpicture}%
 % content title
 \begin{flushright}
@@ -213,13 +216,15 @@ Presuming we have chosen our kernel function well, this can be a  flexible featu
 \clearpage
 % ===== special page ===========================================================
 % ===== page with a background picture =========================================
-\ThisCenterWallPaper{1}{ETH_res/ETH_neutral.jpg}
+%\ThisCenterWallPaper{1}{ETH_res/ETH_neutral.jpg}
+\ThisCenterWallPaper{1}{ETH_neutral.jpg}
 \textcolor{white}{ % change the text on the background picture to white
 Discussion, results, conclusion 
 }
 
 
-\ifoot{}% switch off the i-footer for this page used in ETH_res/ETH_settings.tex
+%\ifoot{}% switch off the i-footer for this page used in ETH_res/ETH_settings.tex
+\ifoot{}% switch off the i-footer for this page used in ETH_settings.tex
 \clearpage
 %% ===== page after a background picture page ==================================
 %\ifoot{% switch on the i-footer for all following pages again
@@ -227,7 +232,8 @@ Discussion, results, conclusion
 %    \vspace{-8.5mm}
 %	\begin{tikzpicture}[remember picture,overlay]
 %		\node [xshift=\paperwidth/2,yshift=\footheight/2]
-%        {\includegraphics[width=\paperwidth]{ETH_res/ETH_footer.jpg}};
+%%        {\includegraphics[width=\paperwidth]{ETH_res/ETH_footer.jpg}};
+%        {\includegraphics[width=\paperwidth]{ETH_footer.jpg}};
 %	\end{tikzpicture}
 %}%
 %
