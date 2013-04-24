@@ -39,6 +39,7 @@
 % we want these for nice mathematical typesetting
 \usepackage{amssymb,amsmath,amsthm,bbm}
 \newtheorem*{defn}{Definition}
+\newtheorem*{fact}{Fact}
 
 \AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
 %% new German
@@ -159,21 +160,78 @@ Samples $x_i \in \mathcal{X}$ are drawn independently.
 \emph{TODO note Jonas used $\Omega$ here - why?}
 \clearpage
 We define define a \emph{kernel}, $k$,
-\begin{equation}
+\begin{equation*}
 k : \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}
-\end{equation}
+\end{equation*}
 and a map
 \begin{equation}
 \phi: \mathcal{X} \rightarrow \mathcal{H}
 \end{equation}
 such that 
-\begin{equation}
+\begin{equation*}
 k(x, x') = \langle \phi(x), \phi(x') \rangle
-\end{equation}
+\end{equation*}
 \clearpage
+\begin{defn}
+A function $k:\mathcal{X} \times \mathcal{X}\rightarrow \mathbb{R}$ is \emph{positive definite} if,
+for all $n \ge 1$,
+for all $(a_1, a_2, \ldots, a_n) \in \mathbb{R}^n$ and
+for all $(x_1, x_2, \ldots, x_n) \in \mathcal{X}^n$,
+\begin{equation*}
+\sum_{i=1}^n\sum_{j=1}^n a_i a_j k(x_i, x_j) \ge 0
+\end{equation*}
+\end{defn}
+\clearpage
+\begin{fact}
+Take $\mathcal{H}$ any Hilbert space, and $\phi: \mathcal{X} \rightarrow \mathcal{H}$. Then  $k(x, x') = \langle \phi(x), \phi(x') \rangle$ is a positive definite function.
+\end{fact}
+\clearpage
+\begin{fact}
+Take a positive definite function $k : \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$.
+Then, there exists a Hilbert space $\mathcal{H}$, and mapping $\phi: \mathcal{X} \rightarrow \mathcal{H}$ such that 
+ $k(x, x') = \langle \phi(x), \phi(x') \rangle$ is a positive definite function.
+\end{fact}
+\clearpage
+Given a positive definite function, we can use it calculate the inner-product between a transformed version of points $x \in \mathcal{X}$ in \emph{some} Hilbert space without needing to know the form of that space, or of the mapping into it.
+\clearpage
+\subsection{Reproducing Kernel Hilbert Space}
+We impose some additional structure.
 
+We consider a Hilbert space of functions $f$ such that $f: \mathcal{X} \rightarrow \mathbb{R}$ and 
+ $\forall x in \mathcal{X}$, $k(\cdot, x) \in \mathcal{H}$.
+Moreover, we require that $\forall f \in \mathcal{H}, \forall x \in \mathcal{X}, \langle f, k(\cdot,x)\rangle = f(x)\rangle$.
+(The \emph{reproducing property}.)
+In such spaces we have that $k(x,y) = \langle k(\cdot, x), k(\cdot, y) \rangle$.
 \clearpage
+Example kernels on $x, y \in \mathbb{R}^d$
+\begin{enumerate}
+\item linear kernel \[k(x, y) = x^Ty\]
+\item polynomial kernel of degree $d\in \mathbb{N}$: \[k(x, y) = (x^Ty)^d\]
+\item Gaussian kernel of bandwidth $\sigma>0$, \[k(x,y) = \exp\left(-\frac{(x-y)^T(x-y)}{2\sigma^2}\right)\]
+\end{enumerate}
 \clearpage
+This last kernel, the Gaussian kernel, has the distinction of being \emph{translation invariant} in both $\mathcal{X}$ and $\mathcal{H}$,
+and it therefore has an intuitive geometric  interpretation as ``similarity'' between two vectors. We will therefore presume it as the kernel for the rest of the presentation.
+\clearpage
+\section{Why bother?}
+Classic reason: Any algorithm that requires only the inner-product of samples
+(or can be rewritten only to require an inner-product)
+can now be constructed instead on a convenient feature space using the kernel function.
+
+Presuming we have chosen our kernel function well, this can be a  flexible feature space, and yet require only cheap computations to apply our algorithm to. Classic algorithms that benefit from this
+\begin{enumerate}
+\item Support Vector Machines
+\item Kernel  Principle Component Anlaysis
+\item Ridge regression
+\item \ldots and distinguishing between two nonparametric probability distributions
+\end{enumerate}
+\clearpage
+\begin{enumerate}
+\item \emph{todo discuss injectivity}
+\item \emph{todo concrete examples? XOR or circular distributions?}, 
+\item \emph{todo construct hilbert embedding of distributions}, 
+\item \emph{todo Riesz representation theory}, 
+\end{enumerate}
 \clearpage
 % ===== special page ===========================================================
 % ===== page with a background picture =========================================
