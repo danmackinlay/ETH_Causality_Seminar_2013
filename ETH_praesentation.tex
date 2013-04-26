@@ -39,11 +39,11 @@
 %\selectlanguage{american}
 
 % we want these for nice mathematical typesetting
-\usepackage{amssymb,amsmath,amsthm,bbm}
+\usepackage{amssymb,amsmath,amsthm,bbm,mathtools}
 \newtheorem*{defn}{Definition}
 \newtheorem*{fact}{Fact}
 
-\AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
+%\AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
 
 % ==== document ================================================================
 \begin{document}
@@ -73,61 +73,89 @@
 
 %#### Please fill in your normal Latex document and add some clearpage-commands.
 \section{What are we doing today?}
+
+Presenting a non-parametric independence test.
+
+Here are the steps
+
 \begin{enumerate}
-	\item We consider the problems with dependency of the PC algorithm on the partial correlation algorithm, which assumes linear, additive noise, then \ldots
-	\item\ldots construct an alternative test of independence which can be used instead.
+	\item Explain why we bother
+	\item Present necessary functional analysis background,
+	\item Actually derive the test (in two different ways), then,
+	\item Construct estimator from data
+\end{enumerate}
+
+\clearpage
+
+\section{Why we bother}
+
+\begin{enumerate}
+	\item Last week we saw the PC and IC algorithms for inferring the DAG \ldots 
+	\item \ldots by estimating pairwise conditional independence\ldots
+	\item \ldots from samples of the joint distribution \ldots
+	\item \ldots using the \emph{partial correlation} test to infer conditional independence
 \end{enumerate}
 \clearpage
-Constructing our alternative will involve
-\begin{enumerate}
-	\item some functional analysis background,
-	\item actually deriving the test, then,
-	\item constructing estimator from data
-\end{enumerate}
+\dots but partial correlation algorithm only works for linearly additive, Gaussian noise.
 \clearpage
 
-\section{The problem with the partial correlation test}
-
-\subsection{Linearly-additive Gaussian noise models and their limitations}
-Last week we saw two methods for inferring graph structures from a sample of variables.
-
-This method presumed linear additive Gaussian noise. However, we are not guaranteed that our data will be anything like that.
-
-\clearpage
 Consider:
 \begin{enumerate}
 \item Categorical data \emph{(If it's raining/if the sprinkler is on/\ldots)}
 \item Non-gaussian noise \emph{(e.g. exponential)}
 \item Non-additive coupling \emph{(e.g. multiplicative)}
-\item Whatever combination of exotic data types, noise and interactions that you would like\dots \emph{(Nucleotide sequences with Bernoulli noise?)}
+\item Whatever combination of exotic data types, noise and interactions that you would like\dots \emph{(Nucleotide sequences..?)}
 \end{enumerate}
 \clearpage
-\section{Examples}
-\emph{TODO}
+
+Therefore: More general tests are desirable.
+
+Why not non-parametric tests?
+
 \clearpage
-\section{Alternative, non-parametric tests of independence}
+
 What independence tests can relax the strong assumptions of partial correlation?
 
 There are many! e.g. mutual information, rank statistics, copula measures\ldots
+
 \clearpage
-\subsection{Hilbert-Schmidt Independence Criterion}
-This week's a``kernelisation''-based~\footnote{as made famous by Support Vector Machines} method, has attractive features.
+Today:
+
+The \emph{Hilbert Schmidt Independence Criterion (HSIC)}
+
+A ``kernelisation''-based~\footnote{as made famous by Support Vector Machines} method, has attractive features.
 \begin{enumerate}
-\item It can handle arbitrary input spaces, not just $\mathbb{R}^d$ (e.g. nucleotide strings)
-\item It is easy to conditionalize.
+\item It can handle arbitrary input spaces, not just $\mathbb{R}^d$ (e.g. nucleotide strings, sprinkler settings)
+\item It is natural to conditionalize.
 \end{enumerate}
-Both those things said, for simplicity, today we will only construct the marginal (unconditional) independence measure on $\mathcal{X}=\mathbb{R}^d$, by way of introduction. (Homework: conditional estimator on general input spaces.)
+\clearpage
+NB: Today we will only construct the marginal (unconditional) independence measure on $\mathcal{X}=\mathbb{R}^d$, by way of introduction. (Homework: conditional estimator on general input spaces.)
+\clearpage
+
+Examples
+\emph{TODO}
+
+Constructing HSIC
+
 \clearpage
 \section{Functional analysis in 15 minutes}
-We consider the prospect of transforming our data in $\mathcal{X}$ into a Hilbert space $\mathcal{H}$, in the hope of finding a convenient representation of the data. This Hilber space, which we will think of as a ``feature space'', will turn out to be a convenient way to represent a wide variety of possible relationships between variables.
+We want to transform our arbitrary data into a natural ``feature'' space with convenient representations of relations between data.
 
-\subsection{Hilbert Space}
-\begin{defn}
-A Hilbert space $\mathcal{H}$ is a complete, non-necessarily finite-dimensional, vector space endowed with an inner product $\langle\cdot,\cdot\rangle: \mathcal{H}\times\mathcal{H} \rightarrow\mathbb{R}$, which fulfils the usual requirements of inner products on vector spaces.
-\end{defn}
+Functional analysis gives us Hilbert spaces, which are one way to formalise this.
+
 \clearpage
 \begin{defn}
-An \emph{inner product}, $\langle\cdot,\cdot\rangle$ on a Hilbert space generalises the definition on $\mathbb{R}^d$ in a natural fashion, in that, for $f,\,g$ and $h \in \mathcal{H}$ and for $\alpha$ and $\beta \in \mathbb{R}$:
+A Hilbert space $\mathcal{H}$ is a vector space with an inner product $\langle\cdot,\cdot\rangle: \mathcal{H}\times\mathcal{H} \rightarrow\mathbb{R}$.
+\end{defn}
+
+Additional technical requirement: It is \emph{complete}.
+
+Additional functional analysis ``twist'': It need not be a finite dimensional vector space.
+\clearpage
+\begin{defn}
+An \emph{inner product}, $\langle\cdot,\cdot\rangle$ on a Hilbert space generalises the definition on $\mathbb{R}^d$.
+
+For $f,\,g$ and $h \in \mathcal{H}$ and for $\alpha$ and $\beta \in \mathbb{R}$:
 \begin{enumerate}
 \item $\langle\alpha f + \beta g, h\rangle = \alpha\langle f, h\rangle + \beta\langle g, h\rangle$
 \item $\langle f, g\rangle = \langle g, f \rangle$
@@ -135,10 +163,15 @@ An \emph{inner product}, $\langle\cdot,\cdot\rangle$ on a Hilbert space generali
 \end{enumerate}
 \end{defn}
 
-Consider an ``input'' metric space $\mathcal{X}$ endowed with $\sigma$-algebra, $\Gamma$,
-on a probability space $(\mathcal{X}, \Gamma, \mu)$.
-Samples $x_i \in \mathcal{X}$ are drawn independently.
-\emph{TODO note Jonas used $\Omega$ here - why?}
+\clearpage
+
+So we have defined some operations in this feature space.
+
+But our data does not come from such as space.
+
+Let's consider the ``input'' space $\mathcal{X}\ne\mathcal{H}$, and points $x_i \in \mathcal{X}$ drawn from it.
+
+We will use \emph{kernel} functions to relate them.
 \clearpage
 We define define a \emph{kernel}, $k$,
 \begin{equation*}
@@ -154,7 +187,11 @@ k(x, x') = \langle \phi(x), \phi(x') \rangle
 \end{equation*}
 \clearpage
 \begin{defn}
-A function $k:\mathcal{X} \times \mathcal{X}\rightarrow \mathbb{R}$ is \emph{positive definite} if,
+A function 
+\begin{equation*}
+k:\mathcal{X} \times \mathcal{X}\rightarrow \mathbb{R}
+\end{equation*}
+ is \emph{positive definite} if,
 for all $n \ge 1$,
 for all $(a_1, a_2, \ldots, a_n) \in \mathbb{R}^n$ and
 for all $(x_1, x_2, \ldots, x_n) \in \mathcal{X}^n$,
@@ -164,25 +201,68 @@ for all $(x_1, x_2, \ldots, x_n) \in \mathcal{X}^n$,
 \end{defn}
 \clearpage
 \begin{fact}
-Take $\mathcal{H}$ any Hilbert space, and $\phi: \mathcal{X} \rightarrow \mathcal{H}$. Then  $k(x, x') = \langle \phi(x), \phi(x') \rangle$ is a positive definite function.
+Take $\mathcal{H}$ any Hilbert space, and 
+\begin{equation*}
+\phi: \mathcal{X} \rightarrow \mathcal{H}
+\end{equation*}
+Then  
+\begin{equation*}
+k(x, x') = \langle \phi(x), \phi(x') \rangle
+\end{equation*}
+is a positive definite function.
 \end{fact}
+But the converse also holds.
 \clearpage
 \begin{fact}
 Take a positive definite function $k : \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$.
-Then, there exists a Hilbert space $\mathcal{H}$, and mapping $\phi: \mathcal{X} \rightarrow \mathcal{H}$ such that 
- $k(x, x') = \langle \phi(x), \phi(x') \rangle$ is a positive definite function.
+Then, there exists a Hilbert space $\mathcal{H}$, and mapping
+\begin{equation*}
+\phi: \mathcal{X} \rightarrow \mathcal{H}
+\end{equation*}
+ such that
+ \begin{equation*}
+ k(x, x') = \langle \phi(x), \phi(x') \rangle
+ \end{equation*}
+is a positive definite function.
 \end{fact}
 \clearpage
-Given a positive definite function, we can use it calculate the inner-product between a transformed version of points $x \in \mathcal{X}$ in \emph{some} Hilbert space without needing to know the form of that space, or of the mapping into it.
-\clearpage
-\subsection{Reproducing Kernel Hilbert Space}
-We impose some additional structure.
+Therefore:
 
-We consider a Hilbert space of functions $f$ such that $f: \mathcal{X} \rightarrow \mathbb{R}$ and 
- $\forall x in \mathcal{X}$, $k(\cdot, x) \in \mathcal{H}$.
-Moreover, we require that $\forall f \in \mathcal{H}, \forall x \in \mathcal{X}, \langle f, k(\cdot,x)\rangle = f(x)\rangle$.
-(The \emph{reproducing property}.)
-In such spaces we have that $k(x,y) = \langle k(\cdot, x), k(\cdot, y) \rangle$.
+Given a kernel, we can use it calculate an inner-product between a transformed version of points $x \in \mathcal{X}$ in some \emph{implicit} Hilbert space.
+
+Indeed, $\mathcal{H}$ can be strange indeed.
+\clearpage
+\subsection{Reproducing Kernel Hilbert Space (RKHS)}
+We impose some additional, useful structure.
+
+Hilbert space of functions
+\begin{equation*}
+f: \mathcal{X} \rightarrow \mathbb{R}
+\end{equation*}
+ and 
+\begin{equation*}
+\forall x \in \mathcal{X}, k(\cdot, x) \in \mathcal{H}
+\end{equation*}
+(A space of functions \emph{on} $\mathcal{X}$.)
+\clearpage
+Moreover,  require the \emph{reproducing property}
+\begin{align*}
+\forall f \in \mathcal{H}, \forall x \in \mathcal{X},\\
+\langle f, k(\cdot,x)\rangle = f(x)\rangle
+\end{align*}
+In such spaces we have that 
+\begin{equation*}
+k(x,y) = \langle k(\cdot, x), k(\cdot, y) \rangle
+\end{equation*}
+\clearpage
+That is, our kernel $k$ presumes the following $\phi$-mapping
+\begin{equation*}
+\phi: \begin{matrix}
+        \mathcal{X}  &\rightarrow \mathcal{H}\\
+        x &\mapsto k(x,\cdot)
+        \end{matrix}
+\end{equation*}
+(It can be shown that this mapping is unique. \emph{todo in what sense?})
 \clearpage
 Example kernels on $x, y \in \mathbb{R}^d$
 \begin{enumerate}
@@ -191,20 +271,31 @@ Example kernels on $x, y \in \mathbb{R}^d$
 \item Gaussian kernel of bandwidth $\sigma>0$, \[k(x,y) = \exp\left(-\frac{(x-y)^T(x-y)}{2\sigma^2}\right)\]
 \end{enumerate}
 \clearpage
-This last kernel, the Gaussian kernel, has the distinction of being \emph{translation invariant} in both $\mathcal{X}$ and $\mathcal{H}$,
-and it therefore has an intuitive geometric  interpretation as ``similarity'' between two vectors. We will therefore presume it as the kernel for the rest of the presentation.
-\clearpage
-\section{Why bother?}
-Classic reason: Any algorithm that requires only the inner-product of samples
-(or can be rewritten only to require an inner-product)
-can now be constructed instead on a convenient feature space using the kernel function.
+We will use the Gaussian kernel again.
 
-Presuming we have chosen our kernel function well, this can be a  flexible feature space, and yet require only cheap computations to apply our algorithm to. Classic algorithms that benefit from this
+Nice, intuitive, properties for demonstration.
+
+\begin{itemize}
+\item \emph{translation invariant} in $\mathcal{X}=\mathbb{R}^d$
+\item measures ``similarity'' between vectors
+\end{itemize}
+\clearpage
+\section{Why bother with this RKHS thing?}
+
+SVM-user's argument:
+
+Take any algorithm that requires only the inner-product of samples.
+
+Now, instead of applying it in the \emph{input space}, apply it in \emph{feature space}.
+
+With a ``good'' kernel function, this can be a flexible feature space, but still be cheap to compute.
+\clearpage
+Classic algorithms that benefit from this
 \begin{enumerate}
 \item Support Vector Machines
-\item Kernel  Principle Component Anlaysis
+\item Kernel  Principle Component Analysis (\emph{Hauptkomponentenanlayse})
 \item Ridge regression
-\item \ldots and distinguishing between two nonparametric probability distributions
+\item Distinguishing between two probability distributions (i.e. the whole point of this presentation)
 \end{enumerate}
 \clearpage
 \begin{enumerate}
@@ -213,6 +304,12 @@ Presuming we have chosen our kernel function well, this can be a  flexible featu
 \item \emph{todo construct hilbert embedding of distributions}, 
 \item \emph{todo Riesz representation theory}, 
 \end{enumerate}
+We endow the input space $\mathcal{X}$ with $\sigma$-algebra $\Gamma$,
+on a probability space $(\mathcal{X}, \Gamma, \mu)$.
+
+Samples $x_i \in \mathcal{X}$ are drawn independently.
+
+
 \clearpage
 % ===== special page ===========================================================
 % ===== page with a background picture =========================================
