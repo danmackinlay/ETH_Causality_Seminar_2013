@@ -144,6 +144,27 @@ We want to transform our arbitrary data into a natural ``feature'' space with co
 Functional analysis gives us the \emph{Hilbert space}, which formalises this.
 
 \clearpage
+\subsection{The classic example}
+
+    \includegraphics[width=\textwidth]{diploma_separation_diagrams.pdf}
+    
+    We want to separate 2 classes points in $\mathbb{R}^2$ (left) with a linear decision boundary. But we can't.
+    
+    We \emph{can} separate the ones on the right though.
+ 
+ \clearpage
+In fact, the ones on the right are a transformed version of the ones on the left, using a mapping:
+\begin{equation*}
+	\phi: \begin{matrix}
+		\mathbb{R}^2  &\rightarrow &\mathbb{R}^3\\
+		(x,y) &\mapsto &\left(x^2, y^2, \sqrt{2}xy\right)
+	\end{matrix}
+\end{equation*}
+
+Can we find a general method for constructing such convenient transforms?
+\clearpage
+\subsection*{Making this general}
+
 \begin{defn}
 A Hilbert space $\mathcal{H}$ is a vector space with an inner product $\langle\cdot,\cdot\rangle: \mathcal{H}\times\mathcal{H} \rightarrow\mathbb{R}$.
 \end{defn}
