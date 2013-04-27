@@ -141,7 +141,7 @@ Constructing HSIC
 \section{Functional analysis in 15 minutes}
 We want to transform our arbitrary data into a natural ``feature'' space with convenient representations of relations between data.
 
-Functional analysis gives us Hilbert spaces, which are one way to formalise this.
+Functional analysis gives us the \emph{Hilbert space}, which formalises this.
 
 \clearpage
 \begin{defn}
@@ -232,7 +232,7 @@ Given a kernel, we can use it calculate an inner-product between a transformed v
 
 Indeed, $\mathcal{H}$ can be strange indeed.
 \clearpage
-\subsection{Reproducing Kernel Hilbert Space (RKHS)}
+\subsection*{Reproducing Kernel Hilbert Space (RKHS)}
 We impose some additional, useful structure.
 
 Hilbert space of functions
@@ -255,14 +255,13 @@ In such spaces we have that
 k(x,y) = \langle k(\cdot, x), k(\cdot, y) \rangle
 \end{equation*}
 \clearpage
-That is, our kernel $k$ presumes the following $\phi$-mapping
+That is, our kernel $k$ induces the following $\phi$-mapping
 \begin{equation*}
 \phi: \begin{matrix}
         \mathcal{X}  &\rightarrow \mathcal{H}\\
         x &\mapsto k(x,\cdot)
         \end{matrix}
 \end{equation*}
-(It can be shown that this mapping is unique. \emph{todo in what sense?})
 \clearpage
 Example kernels on $x, y \in \mathbb{R}^d$
 \begin{enumerate}
@@ -280,7 +279,7 @@ Nice, intuitive, properties for demonstration.
 \item measures ``similarity'' between vectors
 \end{itemize}
 \clearpage
-\section{Why bother with this RKHS thing?}
+\subsection*{Why bother with this RKHS thing?}
 
 SVM-user's argument:
 
@@ -293,23 +292,70 @@ With a ``good'' kernel function, this can be a flexible feature space, but still
 Classic algorithms that benefit from this
 \begin{enumerate}
 \item Support Vector Machines
-\item Kernel  Principle Component Analysis (\emph{Hauptkomponentenanlayse})
+\item Kernel Principle Component Analysis (\emph{Hauptkomponentenanlayse})
 \item Ridge regression
 \item Distinguishing between two probability distributions (i.e. the whole point of this presentation)
 \end{enumerate}
+
+\subsection*{Distinguishing between two probability distributions}
+We use RKHS methods on more ``weird'' objects.
+
+In particular we do kernel comparisons on \emph{probability distributions}.
+\clearpage	
+Consider a distribution $\mathbb{P}$, with R.V. $\mathcal{X}\sim\mathbb{P}$.
+
+Now, define the \emph{mean embedding}:
+
+\begin{equation*}
+\mu[\mathbb{P}]: \begin{matrix}
+        \mathcal{X}  &\rightarrow &\mathbb{R}\\
+        x &\mapsto &\mathbb{E}_\mathbb{P} \big[ k(x,\cdot) \big]
+        \end{matrix}
+\end{equation*}
+\clearpage	
+\begin{fact}
+	\begin{equation*}
+		\forall f \in \mathcal{H} \quad \mathbb{E}_\mathbb{P} \big[ f(X) \big] = \langle f, \mu[\mathbb{P}]\rangle
+	\end{equation*}
+\end{fact}
+That is, we can compute expectations with inner products.
+\clearpage	
+\begin{fact}
+	\begin{equation*}
+		\mu: \mathbb{P} \mapsto \mu[\mathbb{P}]
+	\end{equation*}
+	is an injective map.
+	
+	i.e.
+	\begin{equation*}
+		\mathbb{P}\ne\mathbb{Q} \Rightarrow \mu[\mathbb{P}] \ne \mu[\mathbb{Q}]
+	\end{equation*}
+	
+	We will need this later on.
+\end{fact}
+
 \clearpage
-\begin{enumerate}
-\item \emph{todo discuss injectivity}
-\item \emph{todo concrete examples? XOR or circular distributions?}, 
-\item \emph{todo construct hilbert embedding of distributions}, 
-\item \emph{todo Riesz representation theory}, 
-\end{enumerate}
-We endow the input space $\mathcal{X}$ with $\sigma$-algebra $\Gamma$,
-on a probability space $(\mathcal{X}, \Gamma, \mu)$.
+Requirements:
 
-Samples $x_i \in \mathcal{X}$ are drawn independently.
+	\begin{equation*}
+		\mu: \mathbb{P} \mapsto \mu[\mathbb{P}]
+	\end{equation*}
+	is an injective map.\footnote{
+		This does not hold for \emph{all} kernels.
+		It holds for the Gaussian, which is enough for now.
+	}
+	
+	i.e.
+	\begin{equation*}
+		\mathbb{P}\ne\mathbb{Q} \Rightarrow \mu[\mathbb{P}] \ne \mu[\mathbb{Q}]
+	\end{equation*}
+	
+	We will need this later on.
+	
+	
+\clearpage
 
-
+\emph{todo bibliography}
 \clearpage
 % ===== special page ===========================================================
 % ===== page with a background picture =========================================
