@@ -39,9 +39,17 @@
 %\selectlanguage{american}
 
 % we want these for nice mathematical typesetting
-\usepackage{amssymb,amsmath,amsthm,bbm,mathtools}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{bbm}
+\usepackage{mathtools}
+\usepackage{wrapfig}
 \newtheorem*{defn}{Definition}
 \newtheorem*{fact}{Fact}
+
+
+\DeclareMathOperator*{\corr}{corr}
+\DeclareMathOperator*{\HSIC}{HSIC}
+
 
 %\AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
 
@@ -107,6 +115,42 @@ Consider:
 \item Whatever combination of exotic data types, noise and interactions that you would like\dots \emph{(Nucleotide sequences..?)}
 \end{enumerate}
 \clearpage
+\subsection*{Some correlation test examples}
+\clearpage
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=5cm]{x1_vs_y1.pdf}
+  \end{center}
+\end{wrapfigure}
+$H_0$: $\corr(x_1, y_1)=0$.
+
+$H_A$: $\corr(x_1, y_1)\ne0$.
+
+$P_0 = 0.23$
+
+\clearpage
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=5cm]{x1_vs_z1.pdf}
+  \end{center}
+\end{wrapfigure}
+$H_0$: $\corr(x_1, z_1)=0$.
+
+$H_A$: $\corr(x_1, z_1)\ne0$.
+
+$P_0 = 0.0$
+\clearpage
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=5cm]{x2_vs_y2.pdf}
+  \end{center}
+\end{wrapfigure}
+$H_0$: $\corr(x_1, z_1)=0.15$.
+
+$H_A$: $\corr(x_1, z_1)\ne0$.
+
+$P_0 = 0.15$
+\clearpage
 
 Therefore: More general tests are desirable.
 
@@ -130,12 +174,6 @@ A ``kernelisation''-based~\footnote{as made famous by Support Vector Machines} m
 \end{enumerate}
 \clearpage
 NB: Today we will only construct the marginal (unconditional) independence measure on $\mathcal{X}=\mathbb{R}^d$, by way of introduction. (Homework: conditional estimator on general input spaces.)
-\clearpage
-
-Examples
-\emph{TODO}
-
-Constructing HSIC
 
 \clearpage
 \section{Functional analysis in 15 minutes}
@@ -150,7 +188,7 @@ Functional analysis gives us the \emph{Hilbert space}, which formalises this.
     
     We want to separate 2 classes points in $\mathbb{R}^2$ (left) with a linear decision boundary. But we can't.
     
-    We \emph{can} separate the ones on the right though.
+    We \emph{can} separate the ones in $\mathbb{R}^3$ on the right though.
  
  \clearpage
 In fact, the ones on the right are a transformed version of the ones on the left, using a mapping:
@@ -373,17 +411,48 @@ Requirements:
 	
 	We will need this later on.
 	
-	
+\clearpage
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=5cm]{x1_vs_y1.pdf}
+  \end{center}
+\end{wrapfigure}
+$H_0$: $\HSIC(x_1, y_1)=0$.
+
+$H_A$: $\HSIC(x_1, y_1)\ne0$.
+
+$P_0 = 0.54$
+
+\clearpage
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=5cm]{x1_vs_z1.pdf}
+  \end{center}
+\end{wrapfigure}
+$H_0$: $\HSIC(x_1, z_1)=0$.
+
+$H_A$: $\HSIC(x_1, z_1)\ne0$.
+
+$P_0 = 0.0$
+\clearpage
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=5cm]{x2_vs_y2.pdf}
+  \end{center}
+\end{wrapfigure}
+$H_0$: $\HSIC(x_1, z_1)=0$.
+
+$H_A$: $\HSIC(x_1, z_1)\ne0$.
+
+$P_0 = 0.0$
 \clearpage
 
-\emph{todo bibliography}
-\clearpage
 % ===== special page ===========================================================
 % ===== page with a background picture =========================================
 %\ThisCenterWallPaper{1}{ETH_res/ETH_neutral.jpg}
 \ThisCenterWallPaper{1}{ETH_neutral.jpg}
 \textcolor{white}{ % change the text on the background picture to white
-Discussion, results, conclusion 
+Biblography
 }
 
 
