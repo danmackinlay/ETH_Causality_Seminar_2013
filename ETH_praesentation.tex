@@ -46,6 +46,8 @@
 \usepackage{mathtools}
 \usepackage{wrapfig}
 \usepackage{rotating}
+%fix horrible outline formatting
+\usepackage[shortcuts]{extdash}
 
 \newtheorem*{defn}{Definition}
 \newtheorem*{fact}{Fact}
@@ -54,8 +56,8 @@
 \DeclareMathOperator*{\corr}{corr}
 \DeclareMathOperator*{\HSIC}{HSIC}
 
-
-%\AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
+\setcounter{tocdepth}{2}
+\AtBeginDocument{\renewcaptionname{american}{\contentsname}{\large Outline}}% toc-name
 
 % ==== document ================================================================
 \begin{document}
@@ -420,11 +422,11 @@ Requirements:
 	We will need this later on.
 	
 \clearpage
-\section{Definition of Hilbert-Schmidt Independence Criterion\\ (HSIC)}
+\section{Definition of Hilbert\-/Schmidt Independence Criterion~(HSIC)}
 
 \clearpage
 
-\subsection{HSIC using the Hilbert-Schmidt norm}
+\subsection{HSIC using the Hilbert\-/Schmidt norm}
 \begin{enumerate}
 \item Reminder of functional analysis
 \item Hilbert-Schmidt operators
@@ -444,7 +446,7 @@ The $s_k$'s are called \textbf{singular values} of $T$.
 
 \clearpage
 
-\subsection*{Hilbert-Schmidt operators}
+\subsection*{Hilbert\-/Schmidt operators}
 \textbf{Definition}
 
 $T\in\kappa(\mathcal{H}_1,\mathcal{H}_2)$ is a \textbf{Hilbert-Schmidt operator} if the sequence of singular values of $T$ $(s_k)_{k\in\mathbb{N}}$ is in $l_2$\\ ($\Leftrightarrow\sum_{k\geq1}s_k^2<\infty$).
