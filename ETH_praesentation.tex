@@ -17,7 +17,8 @@
 \definecolor{ETHbrown}{RGB}{148,116,51}
 \definecolor{ETHred}{RGB}{161,82,71}
 \definecolor{ETHdarkgray}{rgb}{0.282,0.322,0.361}    % for box (#48525c)
-\newcommand*{\ETHblue}[1]{\textcolor{ETHblue}{#1}}
+\definecolor{ETHlightgray}{RGB}{211,211,211}
+\newcommand*{\ETHblue}[1]{\textcolor{ETHblue}{#1}} %for faint text
 \newcommand*{\ETHlightblue}[1]{\textcolor{ETHlightblue}{#1}}
 \newcommand*{\ETHtitleblue}[1]{\textcolor{ETHtitleblue}{#1}}
 \newcommand*{\ETHbrown}[1]{\textcolor{ETHbrown}{#1}}
@@ -28,10 +29,10 @@
 \newcommand*{\ETHdeptshort}{\textsc {\color{ETHlightblue}D}\,MATH}
 \newcommand*{\ETHdeptlong}{Department of Mathematics}
 \newcommand*{\ETHinstitut}{Seminar for Statistics}
-\newcommand*{\ETHtitle}{A Non-Parametric Independence Test}
-\newcommand*{\ETHsubtitle}{The Hilbert-Schmidt Independence Criterion}
-\newcommand*{\ETHauthor}{D MacKinlay, C. Pelloni, A. Toletti / \ETHdeptlong / \ETHinstitut}
-\newcommand*{\ETHdate}{Monday, 24th April 2013}
+\newcommand*{\ETHtitle}{Student Seminar: Causality}
+\newcommand*{\ETHsubtitle}{VIII Non-parametric Independence Test }
+\newcommand*{\ETHauthor}{Dan MacKinlay, Clara Pelloni, Ambra Toletti}
+\newcommand*{\ETHdate}{Monday, 29th April 2013}
 
 % ==== document language =======================================================
 % American English
@@ -44,6 +45,8 @@
 \usepackage{bbm}
 \usepackage{mathtools}
 \usepackage{wrapfig}
+\usepackage{rotating}
+
 \newtheorem*{defn}{Definition}
 \newtheorem*{fact}{Fact}
 
@@ -413,6 +416,281 @@ Requirements:
 	We will need this later on.
 	
 \clearpage
+\section{Definition of Hilbert-Schmidt Independence Criterion\\ (HSIC)}
+
+\clearpage
+
+\subsection{HSIC using the Hilbert-Schmidt norm}
+\begin{enumerate}
+\item Reminder of functional analysis
+\item Hilbert-Schmidt operators
+\item An example: Cross-covariance operator
+\item Definition of HSIC
+\end{enumerate}
+
+\clearpage
+
+\subsection*{Reminder of Functional Analysis}
+\textbf{Singular value decomposition}
+Let $T:\mathcal{H}_1\rightarrow\mathcal{H}_2$ be a compact operator, where $\mathcal{H}_1, \mathcal{H}_2$ are two Hilbert, separable spaces. Then:\\ $\exists(e_k)_{k\in\mathbb{N}},(f_k)_{k\in\mathbb{N}}$ ONB of $\mathcal{H}_1, \mathcal{H}_2$ resp., $\exists (s_k)_{k\in\mathbb{N}}$ non-decreasing sequence with $s_k\rightarrow0$, s.t.
+\begin{equation*}
+Tx=\sum_{k\geq1}s_k\langle x,e_k\rangle f_k
+\end{equation*}
+The $s_k$'s are called \textbf{singular values} of $T$.
+
+\clearpage
+
+\subsection*{Hilbert-Schmidt operators}
+\textbf{Definition}
+
+$T\in\kappa(\mathcal{H}_1,\mathcal{H}_2)$ is a \textbf{Hilbert-Schmidt operator} if the sequence of singular values of $T$ $(s_k)_{k\in\mathbb{N}}$ is in $l_2$\\ ($\Leftrightarrow\sum_{k\geq1}s_k^2<\infty$).
+
+\clearpage
+
+\subsection*{Hilbert-Schmidt operators}
+The norm for Hilbert-Schmidt operators is given by
+\begin{equation*}
+\|T\|_{HS}:=\|s_k(T)\|_{l_2}=(\sum_{k\geq1}s^2_k)^{1/2}
+\end{equation*}
+
+\clearpage
+
+\subsection*{Example: Cross-covariance operator}
+\textbf{Notation}
+$X,Y$ are two random variables on $(\mathcal{X},\Gamma),\\(\mathcal{Y},\Delta)$. We define kernels $k(\cdot,\cdot),\ell(\cdot,\cdot)$ on $\mathcal{X}$ resp. $\mathcal{Y}$ and denote the corresponding RKHS $\mathcal{H}_{\mathcal{X}},\mathcal{H}_{\mathcal{Y}}$
+
+\clearpage
+
+\subsection*{Example: Cross-covariance operator}
+The \textbf{Cross-covariance operator} $\mathcal{C}_{\mathcal{X},\mathcal{Y}}: \mathcal{H}_{\mathcal{Y}}\rightarrow\mathcal{H}_{\mathcal{X}}$ is defined as the unique lin. operator which satisfies:
+\begin{equation*}
+\langle f,\mathcal{C}_{\mathcal{X},\mathcal{Y}}g\rangle=\mathbb{E}_{X,Y}f(X)g(Y)-\mathbb{E}_{X}f(X)\mathbb{E}_{Y}g(Y)
+\end{equation*}
+
+\clearpage
+\subsection*{Example: Cross-covariance operator}
+Finite dim. case: covariance matrix \\$\mathcal{X}=\mathcal{Y}=\mathbb{R}^d$, $\mathcal{C}\in\mathbb{R}^{d\times d}$, $a,b\in\mathbb{R}^d$:
+\begin{align*}
+a^\top\mathcal C b&=\langle a,\mathcal{C}b\rangle\\&=\mathbb{E}(a^\top X b^\top Y)-\mathbb{E}(a^\top X)\mathbb{E}(b^\top Y)\\&=a^\top\mathbb{E}(XY^\top)b-a^\top\mathbb{E}X(\mathbb{E}Y)^\top b\\&=a^\top \text{Cov}(X,Y)b
+\end{align*}
+
+
+\clearpage
+
+\subsection*{Definition of HSIC}
+\begin{align*}
+\text{HSIC}(\mathbb{P}^{(X,Y)}):=\|\mathcal{C}_{\mathcal{X},\mathcal{Y}}\|_{HS}
+\end{align*}
+By some calculation:
+\begin{align*}
+\text{HSIC}(\mathbb{P}^{(X,Y)})=&
+\mathbb{E}_{X,Y}\mathbb{E}_{\tilde X,\tilde Y}k(X,\tilde X)\ell (Y,\tilde Y)\\&-2\mathbb{E}_{X,Y}\mathbb{E}_{\tilde X}\mathbb{E}_{\tilde Y}k(X,\tilde X)\ell (Y,\tilde Y)\\&+\mathbb{E}_X\mathbb{E}_{\tilde X}\mathbb{E}_Y\mathbb{E}_{\tilde Y}k(X,\tilde X)\ell (Y,\tilde Y)
+\end{align*}
+
+\clearpage
+
+\subsection{HSIC as a special case of MMD}
+\begin{enumerate}
+\item Definition of MMD
+\item MMD as the distance of Mean elements
+\item HSIC as MMD
+\end{enumerate}
+
+\clearpage
+
+\subsection*{Definition of MMD}
+
+\begin{align*}
+\textbf{Idea:}\;& \text{MMD}\Rightarrow\text{distance between distributions}\\&\text{consider joint probability distr. and product}\\& \text{of the marginal distr. of two random variables}\\&\text{MMD}=0\Rightarrow\text{indep. random variables}
+\end{align*}
+
+\clearpage
+
+\subsection*{Definition of MMD}
+Take $(\mathcal{X},\Gamma)$ measurable space with two measures $\mathbb{P},\mathbb{Q}$ and let $\mathcal{F}$ be any class of measurable functions\\ $f:\mathcal X\rightarrow\mathbb{R}$. Then the \textbf{Maximum mean discrepancy} (MMD) is defined as
+\begin{equation*}
+\text{MMD}_\mathcal{F}(\mathbb{P},\mathbb{Q}):=\underset{f\in\mathcal{F}}{sup}|\mathbb E_{X\sim\mathbb P}f(X)-\mathbb E_{Y\sim\mathbb Q}f(Y)|
+\end{equation*}
+
+\clearpage
+
+\subsection*{Definition of MMD}
+Choice of $\mathcal{F}$?\\
+$\rightarrow$ choose $\mathcal F$ as being the unit ball in an RKHS:
+\begin{equation*}
+\mathcal{F}=\{f\in\mathcal H:\|f\|_\mathcal H\leq 1\}
+\end{equation*}
+$\rightarrow$ choose a good kernel!
+
+\clearpage
+
+\subsection*{MMD as the distance of mean elements}
+\textbf{Proposition}
+Let $k(\cdot,\cdot)\in \mathcal{L}_1$. Then
+\begin{equation*}
+\text{MMD}(\mathbb P,\mathbb Q)=\|\mu[\mathbb{P}]-\mu[\mathbb{Q}]\|_\mathcal H
+\end{equation*}
+
+\clearpage
+
+\subsection*{HSIC as MMD}
+\textbf{Notation}
+$(X,Y)$ random vector taking values in the product space $(\mathcal{X},\mathcal{Y})$, and define the kernel on $(\mathcal{X},\mathcal{Y})$ via
+\begin{align*}
+&\mathcal{X}\times\mathcal{Y}\rightarrow\mathbb{R}\\
+&((x,y),(\tilde x,\tilde y))\mapsto k(x,\tilde x)\cdot \ell (Y,\tilde Y)
+\end{align*}
+where $k(\cdot,\cdot),\ell(\cdot,\cdot)$ are kernels on $\mathcal X,\mathcal Y$ resp.
+
+\clearpage
+
+\subsection*{HSIC as MMD}
+MMD for the distributions $\mathbb P:=\mathbb{P}^{(X,Y)}$ and $\mathbb Q:=\mathbb{P}^{X}\otimes\mathbb{P}^{Y}$ can be expressed as
+\begin{equation*}
+\text{MMD}(\mathbb{P}^{(X,Y)},\mathbb{P}^{X}\otimes\mathbb{P}^{Y})^2=\text{HSIC}(\mathbb{P}^{(X,Y)})
+\end{equation*}
+Proof: on the board.
+
+\clearpage
+
+In conclusion:
+\begin{align*}
+X,Y\; \text{independent}&\Leftrightarrow\;\mathbb{P}^{(X,Y)}=\mathbb{P}^{X}\otimes\mathbb{P}^{Y}\\&\Leftrightarrow\;\text{MMD}(\mathbb{P}^{(X,Y)},\mathbb{P}^{X}\otimes\mathbb{P}^{Y})=0\\&\Leftrightarrow\;\text{HSIC}(\mathbb{P}^{(X,Y)})=0
+\end{align*}
+
+\clearpage
+
+
+%#### Ambra's part
+\section{Independence Test based on HSIC}
+\clearpage
+Let $(X_1,Y_1), \ldots, (X_m,Y_m)$ be independent and identically distributed according to $\mathbb{P}^{(X,Y)}$. We want to test the hypothesis
+\newcommand{\indep}{\begin{sideways}%
+    $\vDash$\end{sideways}}
+\newcommand{\dep}{\begin{sideways}%
+    $\nvDash$\end{sideways}}
+\begin{equation*}
+\begin{matrix}
+H_0: & X \indep Y & \mbox{ against} \\
+H_1: &  X \dep Y &
+\end{matrix}
+\end{equation*}
+
+with a significance level $\alpha$ by using the HSIC.
+
+\clearpage
+
+Construction of the independence test:
+\begin{enumerate}
+\item Use HSIC as test statistics
+\item Determine its distribution under $H_0$
+\item Find the acceptance region and the decision function of the test
+\end{enumerate}
+
+\clearpage
+
+\subsubsection{Step 1: Test statistics based on the HSIC}
+Idea: Use the sample estimator of the HSIC obtained by plugging the empirical distributions into 
+\begin{align*}
+HSIC(\mathbb{P}^{(X,Y)})= & \mathbb{E}_{X,Y}\mathbb{E}_{\tilde{X},\tilde{Y}}k(X,\tilde{X})\ell (Y,\tilde{Y}) \\ &-2 \mathbb{E}_{X,Y}\mathbb{E}_{\tilde{X}}\mathbb{E}_{\tilde{Y}}k(X,\tilde{X})\ell (Y,\tilde{Y}) \\ & +\mathbb{E}_{X} \mathbb{E}_{Y}\mathbb{E}_{\tilde{X}}\mathbb{E}_{\tilde{Y}} k(X,\tilde{X})\ell (Y,\tilde{Y})
+\end{align*}
+
+\clearpage
+
+the result is the V-statistic
+
+\begin{align*}
+\widehat{HSIC} = & \frac{1}{m^2} \sum^{m}_{i,j=1} k(X_i,X_j) \ell (Y_i, Y_j) \\
+& - 2\frac{1}{m^3}\sum^{m}_{i,j,f=1} k(X_i,X_j) \ell (Y_i, Y_f)  \\ & + \frac{1}{m^4}\sum^{m}_{i,j,f,g=1} k(X_i,X_j) \ell (Y_f, Y_g)
+\end{align*}
+
+\clearpage
+
+which is equivalent to 
+\begin{equation*}
+\widehat{HSIC} = \frac{1}{m^2} \mbox{trace} (KHLH)
+\end{equation*}
+
+where
+
+\begin{align*}
+(K)_{ij} = & k(X_i, X_j) \\
+(L)_{ij} = & \ell (Y_i,Y_j)  \\
+H= & Id_m - \frac{1}{m}\mathbf{1}\cdot \mathbf{1^t}
+\end{align*}
+
+
+\clearpage
+
+\subsubsection{Step 2: Distribution of $\widehat{HSIC}$ under $H_0$}
+
+\textbf{Theorem} Under the assumption of independence we have
+
+\begin{equation*}
+m\cdot\widehat{HSIC} \overset{\text{\scriptsize d}}{\rightarrow} 6\cdot \sum^{\infty}_{p=1} \lambda_p \omega_p^2
+\end{equation*}
+where $\omega_j^2 \overset{\text{\scriptsize iid}}{\sim}  \chi_1^2$ and $\lambda_p$ solves the eigenvalue problem
+\begin{equation*}
+\lambda_p g_p(z_j) = \int h_{ijqr} g_p(z_i) d\mathbb{P}^{(Z_i, Z_q, Z_r)}
+\end{equation*}
+where 
+\begin{align*}
+Z_j= &(X_j,Y_j) \\
+h_{ijqr}= &\frac{1}{4\!}\sum_{(t,u,q,r)\in\mathbb{S}}k_{tu}\ell_{tu} + k_{tu}\ell_{vw}-2k_{tu}\ell_{tv}
+\end{align*}
+Note that $\mathbb{S}$ indicates the set of all ordered quadruples drawn without replacement from $(i,j,q,r)$.
+\clearpage
+
+But the complexity of both the eigenvalue problem and the sum over a large number of random variables makes difficult to get the exact quantiles.
+\clearpage
+
+Trick (Kankainen): Use a Gamma Approximation:
+\begin{equation*}
+m \cdot \widehat{HSIC} \overset{\text{\scriptsize d}}{\thickapprox} \Gamma(\gamma, \beta)
+\end{equation*}
+
+where 
+\begin{align*}
+\gamma &= \frac{(\mathbb{E} \widehat{HSIC})^2}{var \widehat{HSIC}} \\
+\beta & = m\cdot \frac{var\widehat{HSIC}}{\mathbb{E}\widehat{HSIC}}
+\end{align*}
+\clearpage
+
+Note: To compute the moments efficiently we use, again, an approximation.
+\begin{align*}
+\mathbb{\widehat{E}} = & {\color{ETHlightgray} \frac{1}{m} + \frac{1}{m^4(m-1)^2}\sum_{i<j}k_{ij}\sum_{i<j}\ell_{ij}-\frac{1}{m^2(m-1)}\sum_{i<j}k_{ij}} \\& {\color{ETHlightgray} - \frac{1}{m^2(m-1)}\sum_{i<j}\ell_{ij} }\\
+\widehat{var} & = {\color{ETHlightgray}\frac{2(m-4)(m-5)}{m(m-1)(m-2)(m-3)} \mathbf{1^{t}}(B-diag(B))\mathbf{1}}
+\end{align*}
+
+where $B=((HKH).\cdot (HLH)).^2$
+
+\clearpage
+
+\subsubsection{Step 3: Acceptance region and decision function}
+
+Recall: $HSIC(\mathbb{P}^{(X,Y)})$ ''measures the distance between $\mathbb{P}^{(X,Y)}$ and $\mathbb{P}^X \otimes \mathbb{P}^Y$''.\\
+
+Then the acceptance region has the form
+
+\begin{equation*}
+\left[ 0, c\right]
+\end{equation*}
+
+where the threshold $c$ corresponds to the $(1-\alpha)$ quantile of $\Gamma(\gamma,\beta)$.
+
+\clearpage
+
+Then the decision function has the form
+
+\begin{equation*}
+d\left((X_1,Y_1), \ldots, (X_m, Y_m)\right)=\left\lbrace\begin{matrix}
+H_0, & \widehat{HSIC}\leq c \\
+H_1, & \widehat{HSIC} > c
+\end{matrix} \right.
+\end{equation*}
+
+\clearpage
+\section{In practice}
 \begin{wrapfigure}{l}{0.5\textwidth}
   \begin{center}
     \includegraphics[width=5cm]{x1_vs_y1.pdf}
