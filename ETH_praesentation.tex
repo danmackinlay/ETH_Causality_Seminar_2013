@@ -507,7 +507,6 @@ By some calculation:
 \begin{align*}
 \textbf{Idea:}\;& \text{MMD}\Rightarrow\text{distance between distributions}\\&\text{consider joint probability distr. and product}\\& \text{of the marginal distr. of two random variables}\\&\text{MMD}=0\Rightarrow\text{indep. random variables}
 \end{align*}
-
 \clearpage
 
 \subsection*{Definition of MMD}
@@ -525,7 +524,6 @@ $\rightarrow$ choose $\mathcal F$ as being the unit ball in an RKHS:
 \mathcal{F}=\{f\in\mathcal H:\|f\|_\mathcal H\leq 1\}
 \end{equation*}
 $\rightarrow$ choose a good kernel!
-
 \clearpage
 
 \subsection*{MMD as the distance of mean elements}
@@ -534,7 +532,7 @@ Let $k(\cdot,\cdot)\in \mathcal{L}_1$. Then
 \begin{equation*}
 \text{MMD}(\mathbb P,\mathbb Q)=\|\mu[\mathbb{P}]-\mu[\mathbb{Q}]\|_\mathcal H
 \end{equation*}
-
+\includegraphics[width=0.8\textwidth]{geometric_mean_embedding.pdf}
 \clearpage
 
 \subsection*{HSIC as MMD}
